@@ -28,14 +28,14 @@ Add an error to the error map of a D80 image.  If the image does not have
 an error map, one will be added.  To clear an error byte in the map, set
 it to zero.
 
-d80dir
-------
+d64dir, d80dir
+--------------
 
-Read the CBM DOS directory of a D80 image using `c1541` from VICE.  This
+Read the CBM DOS directory of an image using `c1541` from VICE.  This
 script exists because `c1541` will not read a disk image with an error map.
-If the disk image has no error map, `d80dir` will pass it directly to
-`c1541`.  If the disk image has an error map, `d80dir` will make a temp
-file without the error map and pass that to `c1541`.
+If the disk image has no error map, it will be passed directly to
+`c1541`.  If the disk image has an error map, a temp file will be created
+of the image without the error map, and it will be passed to `c1541`.
 
 d80offset
 ---------
@@ -43,8 +43,8 @@ d80offset
 Given a track and sector, display its offset in the disk image.  This is
 useful when examining an image file in a hex editor.
 
-d80splice
----------
+d64splice, d80splice
+--------------------
 
 Copy a sector from the source image into the target image.  If you have two
 images of the same disk with different bad sectors, you can use this to

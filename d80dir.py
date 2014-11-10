@@ -6,13 +6,17 @@ import sys
 import tempfile
 
 def print_dir(filename):
+    # find the size of the disk image without the error map
+    _, ext = os.path.splitext(filename)
+    size = {'.d64': 174848, '.d80': 533248}[ext]
+
     # if the image has error info at the end, c1541 can't read it,
     # so create a tempfile without the error info
     tmpfile = None
-    if filename.endswith('.d80') and os.path.getsize(filename) > 533248:
+    if os.path.getsize(filename) > size:
         tmpfile = tempfile.NamedTemporaryFile(mode='wb', delete=False)
         with open(filename, 'rb') as f:
-            data = f.read(533248)
+            data = f.read(size)
             tmpfile.write(data)
             tmpfile.close()
             filename = tmpfile.name

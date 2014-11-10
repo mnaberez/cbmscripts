@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 '''Usage: d80truncate <filename.d80>'''
+import os
 import sys
 
 
 def trunc(filename):
+    # find the size of the disk image without the error map
+    _, ext = os.path.splitext(filename)
+    size = {'.d64': 174848, '.d80': 533248}[ext]
+
     inp = open(filename, "rb")
-    data = inp.read(533248)
-    assert len(data) == 533248
+    data = inp.read(size)
+    assert len(data) == size
     inp.close()
 
     out = open(filename, "wb")

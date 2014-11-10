@@ -51,8 +51,8 @@ images of the same disk with different bad sectors, you can use this to
 make one good image.  Use `d80adderror` to clear the error in the error map
 after splicing.
 
-d80truncate
------------
+d64truncate, d80truncate
+------------------------
 
 Remove the error map from a disk image.  Use this if you've fixed all errors
 on a disk, or if you have to use the image with a program that does not

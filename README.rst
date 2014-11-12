@@ -3,8 +3,8 @@ cbmscripts
 
 Scripts for working with Commodore disk images
 
-d64bad, d80bad
---------------
+d64bad, d80bad, d82bad
+----------------------
 
 Read the error map at the end of a disk image and report all bad sectors.
 

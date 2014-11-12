@@ -28,14 +28,14 @@ Add an error to the error map of an image.  If the image does not have
 an error map, one will be added.  To clear an error byte in the map, set
 it to zero.
 
-d64dir, d80dir
---------------
+d64dir, d80dir, d82dir
+----------------------
 
 Read the CBM DOS directory of an image using `c1541` from VICE.  This
-script exists because `c1541` will not read a disk image with an error map.
-If the disk image has no error map, it will be passed directly to
-`c1541`.  If the disk image has an error map, a temp file will be created
-of the image without the error map, and it will be passed to `c1541`.
+script exists because some version of `c1541` will not read some disk images
+with an error map.  If the disk image has no error map, it will be passed
+directly to `c1541`.  If the disk image has an error map, a temp file will be
+created of the image without the error map, and it will be passed to `c1541`.
 
 d80offset
 ---------

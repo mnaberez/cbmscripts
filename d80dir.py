@@ -8,7 +8,11 @@ import tempfile
 def print_dir(filename):
     # find the size of the disk image without the error map
     _, ext = os.path.splitext(filename)
-    size = {'.d64': 174848, '.d80': 533248, '.d82': 1066496}[ext]
+    size = {'.d64': 174848,
+            '.d80': 533248,
+            '.d81': 819200,
+            '.d82': 1066496
+           }[ext]
 
     # if the image has error info at the end, c1541 can't read it,
     # so create a tempfile without the error info

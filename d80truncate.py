@@ -7,7 +7,11 @@ import sys
 def trunc(filename):
     # find the size of the disk image without the error map
     _, ext = os.path.splitext(filename)
-    size = {'.d64': 174848, '.d80': 533248}[ext]
+    size = {'.d64': 174848,
+            '.d80': 533248,
+            '.d81': 819200,
+            '.d82': 1066496
+           }[ext]
 
     inp = open(filename, "rb")
     data = inp.read(size)

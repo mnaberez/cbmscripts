@@ -4,21 +4,29 @@ import sys
 import os
 
 def add_errors(filename, target_track, target_sector, error_code):
+    _, ext = os.path.splitext(filename)
+    size, is_valid_ts = {
+        '.d64': [174848, is_valid_4040_ts],
+        '.d80': [533248, is_valid_8050_ts],
+        '.d82': [1066496, is_valid_8250_ts]
+    }[ext]
+    sectors = size / 256
+
     pet_track, pet_sector = 1, 0
     error_map = ''
     error_index = 0
 
-    if os.path.getsize(filename) > 533248:
+    if os.path.getsize(filename) > size:
         # existing error map
         f = open(filename, "rb")
-        f.seek(533248)
+        f.seek(size)
         error_map = list(f.read())
         f.close()
     else:
         # create a new error map
-        error_map = list(chr(0) * 2083)
+        error_map = list(chr(0) * sectors)
 
-    assert len(error_map) == 2083
+    assert len(error_map) == sectors
 
     # TODO: this can run forever if bad track/sector specified
     while True:
@@ -31,16 +39,29 @@ def add_errors(filename, target_track, target_sector, error_code):
 
         # increment pet track/sector counters
         pet_sector += 1
-        if not is_valid_8050_ts(pet_track, pet_sector):
+        if not is_valid_ts(pet_track, pet_sector):
             pet_sector = 0
             pet_track += 1
     error_map = ''.join(error_map)
 
     f = open(filename, "rb+")
-    f.seek(533248)
+    f.seek(size)
     f.write(error_map)
     f.close()
-    assert os.path.getsize(filename) == 535331
+    assert os.path.getsize(filename) == size + sectors
+
+
+def is_valid_4040_ts(track, sector):
+    valid = False
+    if track >= 1 and track <= 17:
+        valid = sector >= 0 and sector <= 20
+    elif track >= 18 and track <= 24:
+        valid = sector >= 0 and sector <= 18
+    elif track >= 25 and track <= 30:
+        valid = sector >= 0 and sector <= 17
+    elif track >= 31 and track <= 35:
+        valid = sector >= 0 and sector <= 16
+    return valid
 
 def is_valid_8050_ts(track, sector):
     valid = False
@@ -51,6 +72,26 @@ def is_valid_8050_ts(track, sector):
     elif track >= 54 and track <= 64:
         valid = sector >= 0 and sector <= 24
     elif track >= 65 and track <= 77:
+        valid = sector >= 0 and sector <= 22
+    return valid
+
+def is_valid_8250_ts(track, sector):
+    valid = False
+    if track >= 1 and track <= 39:
+        valid = sector >= 0 and sector <= 28
+    elif track >= 40 and track <= 53:
+        valid = sector >= 0 and sector <= 26
+    elif track >= 54 and track <= 64:
+        valid = sector >= 0 and sector <= 24
+    elif track >= 65 and track <= 77:
+        valid = sector >= 0 and sector <= 22
+    elif track >= 78 and track <= 116:
+        valid = sector >= 0 and sector <= 28
+    elif track >= 117 and track <= 130:
+        valid = sector >= 0 and sector <= 26
+    elif track >= 131 and track <= 141:
+        valid = sector >= 0 and sector <= 24
+    elif track >= 142 and track <= 154:
         valid = sector >= 0 and sector <= 22
     return valid
 

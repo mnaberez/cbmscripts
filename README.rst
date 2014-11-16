@@ -8,8 +8,8 @@ d64bad, d80bad, d82bad
 
 Read the error map at the end of a disk image and report all bad sectors.
 
-d64diff, d80diff
-----------------
+d64diff, d80diff, d82diff
+-------------------------
 
 Compare every sector of two disk images and report the differences.
 
@@ -21,8 +21,8 @@ suggests the disk should have been imaged as a D71 (1571, double sided).
 This checks a flag in the directory and also looks for any track/sector
 pointers that are outside the 1541 range.
 
-d64adderror, d80adderror
-------------------------
+d64adderror, d80adderror, d82adderror
+-------------------------------------
 
 Add an error to the error map of an image.  If the image does not have
 an error map, one will be added.  To clear an error byte in the map, set

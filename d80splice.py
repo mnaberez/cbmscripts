@@ -4,6 +4,20 @@ import sys
 import os
 
 def splice(src_filename, dest_filename, splice_track, splice_sector):
+    # both images must be the same type
+    _, src_ext = os.path.splitext(src_filename)
+    _, dest_ext = os.path.splitext(dest_filename)
+    assert src_ext == dest_ext
+
+    # find the size of the disk image without the error map
+    # and function to check if a t/s number is valid
+    size, is_valid_ts = {
+        '.d64': [174848, is_valid_4040_ts],
+        '.d80': [533248, is_valid_8050_ts],
+        '.d81': [819200, is_valid_1581_ts],
+        '.d82': [1066496, is_valid_8250_ts]
+    }[src_ext]
+
     src = open(src_filename, "rb")
     src.seek(0)
     dest = open(dest_filename, "rb+")
@@ -23,7 +37,7 @@ def splice(src_filename, dest_filename, splice_track, splice_sector):
 
         # increment pet track/sector counters
         pet_sector += 1
-        if not is_valid_8050_ts(pet_track, pet_sector):
+        if not is_valid_ts(pet_track, pet_sector):
             pet_sector = 0
             pet_track += 1
 
@@ -32,12 +46,24 @@ def splice(src_filename, dest_filename, splice_track, splice_sector):
 
         # stop before end of disk image since
         # an error map may follow the data
-        if src.tell() == 533248:
+        if src.tell() == size:
             break
 
     src.close()
     dest.close()
 
+
+def is_valid_4040_ts(track, sector):
+    valid = False
+    if track >= 1 and track <= 17:
+        valid = sector >= 0 and sector <= 20
+    elif track >= 18 and track <= 24:
+        valid = sector >= 0 and sector <= 18
+    elif track >= 25 and track <= 30:
+        valid = sector >= 0 and sector <= 17
+    elif track >= 31 and track <= 35:
+        valid = sector >= 0 and sector <= 16
+    return valid
 
 def is_valid_8050_ts(track, sector):
     valid = False
@@ -49,6 +75,32 @@ def is_valid_8050_ts(track, sector):
         valid = sector >= 0 and sector <= 24
     elif track >= 65 and track <= 77:
         valid = sector >= 0 and sector <= 22
+    return valid
+
+def is_valid_8250_ts(track, sector):
+    valid = False
+    if track >= 1 and track <= 39:
+        valid = sector >= 0 and sector <= 28
+    elif track >= 40 and track <= 53:
+        valid = sector >= 0 and sector <= 26
+    elif track >= 54 and track <= 64:
+        valid = sector >= 0 and sector <= 24
+    elif track >= 65 and track <= 77:
+        valid = sector >= 0 and sector <= 22
+    elif track >= 78 and track <= 116:
+        valid = sector >= 0 and sector <= 28
+    elif track >= 117 and track <= 130:
+        valid = sector >= 0 and sector <= 26
+    elif track >= 131 and track <= 141:
+        valid = sector >= 0 and sector <= 24
+    elif track >= 142 and track <= 154:
+        valid = sector >= 0 and sector <= 22
+    return valid
+
+def is_valid_1581_ts(track, sector):
+    valid = False
+    if track >= 1 and track <= 80:
+        valid = sector >= 0 and sector <= 39
     return valid
 
 

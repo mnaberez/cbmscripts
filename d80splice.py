@@ -12,7 +12,7 @@ def splice(src_filename, dest_filename, splice_track, splice_sector):
     # find the size of the disk image without the error map
     # and function to check if a t/s number is valid
     size, is_valid_ts = {
-        '.d64': [174848, is_valid_4040_ts],
+        '.d64': [174848, is_valid_1541_ts],
         '.d80': [533248, is_valid_8050_ts],
         '.d81': [819200, is_valid_1581_ts],
         '.d82': [1066496, is_valid_8250_ts]
@@ -53,7 +53,7 @@ def splice(src_filename, dest_filename, splice_track, splice_sector):
     dest.close()
 
 
-def is_valid_4040_ts(track, sector):
+def is_valid_1541_ts(track, sector):
     valid = False
     if track >= 1 and track <= 17:
         valid = sector >= 0 and sector <= 20
@@ -63,6 +63,12 @@ def is_valid_4040_ts(track, sector):
         valid = sector >= 0 and sector <= 17
     elif track >= 31 and track <= 35:
         valid = sector >= 0 and sector <= 16
+    return valid
+
+def is_valid_1581_ts(track, sector):
+    valid = False
+    if track >= 1 and track <= 80:
+        valid = sector >= 0 and sector <= 39
     return valid
 
 def is_valid_8050_ts(track, sector):
@@ -95,12 +101,6 @@ def is_valid_8250_ts(track, sector):
         valid = sector >= 0 and sector <= 24
     elif track >= 142 and track <= 154:
         valid = sector >= 0 and sector <= 22
-    return valid
-
-def is_valid_1581_ts(track, sector):
-    valid = False
-    if track >= 1 and track <= 80:
-        valid = sector >= 0 and sector <= 39
     return valid
 
 

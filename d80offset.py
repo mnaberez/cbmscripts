@@ -7,6 +7,10 @@ def show_offset(filename, target_track, target_sector):
     pet_track, pet_sector = 1, 0
     offset = 0
 
+    if not is_valid_8050_ts(target_track, target_sector):
+        msg = "Invalid track/sector: %d/%d" % (target_track, target_sector)
+        raise ValueError(msg)
+
     while True:
         if (pet_track == target_track) and (pet_sector == target_sector):
             print "%d,%d is offset %d (%x hex)" % (target_track, target_sector, offset, offset)

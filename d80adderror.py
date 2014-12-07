@@ -14,6 +14,10 @@ def add_errors(filename, target_track, target_sector, error_code):
     }[ext]
     sectors = size / 256
 
+    if not is_valid_ts(target_track, target_sector):
+        msg = "Invalid track/sector: %d/%d" % (target_track, target_sector)
+        raise ValueError(msg)
+
     pet_track, pet_sector = 1, 0
     error_map = ''
     error_index = 0
@@ -30,7 +34,6 @@ def add_errors(filename, target_track, target_sector, error_code):
 
     assert len(error_map) == sectors
 
-    # TODO: this can run forever if bad track/sector specified
     while True:
         if (pet_track == target_track) and (pet_sector == target_sector):
             error_map[error_index] = chr(error_code)

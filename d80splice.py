@@ -19,6 +19,10 @@ def splice(src_filename, dest_filename, splice_track, splice_sector):
         '.d82': [1066496, is_valid_8250_ts]
     }[src_ext]
 
+    if not is_valid_ts(splice_track, splice_sector):
+        msg = "Invalid track/sector: %d/%d" % (splice_track, splice_sector)
+        raise ValueError(msg)
+
     src = open(src_filename, "rb")
     src.seek(0)
     dest = open(dest_filename, "rb+")

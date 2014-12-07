@@ -13,6 +13,10 @@ def zero(filename, target_track, target_sector):
         '.d82': [1066496, is_valid_8250_ts]
     }[ext]
 
+    if not is_valid_ts(target_track, target_sector):
+        msg = "Invalid track/sector: %d/%d" % (target_track, target_sector)
+        raise ValueError(msg)
+
     f = open(filename, "rb+")
     f.seek(0)
 

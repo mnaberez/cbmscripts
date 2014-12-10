@@ -29,7 +29,7 @@ def print_diff(a_filename, b_filename):
             break # no data
 
         if a_sector != b_sector:
-            print "%02d,%02d differ" % (pet_track, pet_sector)
+            sys.stdout.write("%02d,%02d differ\n" % (pet_track, pet_sector))
 
         # increment pet track/sector counters
         pet_sector += 1

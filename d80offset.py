@@ -13,7 +13,8 @@ def show_offset(filename, target_track, target_sector):
 
     while True:
         if (pet_track == target_track) and (pet_sector == target_sector):
-            print "%d,%d is offset %d (%x hex)" % (target_track, target_sector, offset, offset)
+            sys.stdout.write("%d,%d is offset %d (%x hex)\n" %
+                (target_track, target_sector, offset, offset))
             break
 
         # one sector

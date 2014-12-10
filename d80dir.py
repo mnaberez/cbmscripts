@@ -43,7 +43,7 @@ def print_dir(filename):
 
     # print the directory
     for line in lines:
-        print(line)
+        sys.stdout.write("%s\n" % line)
 
     # unlink tempfile if we made one
     if tmpfile:

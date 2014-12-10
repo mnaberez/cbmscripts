@@ -29,8 +29,8 @@ def print_bad(filename):
 
         error = ord(data_byte)
         if error > 1:
-            print("error %02d on %02d,%02d (offset %d / %0x hex)" % (
-                error, track, sector, offset, offset))
+            msg = "error %02d on %02d,%02d (offset %d / %0x hex)\n"
+            sys.stdout.write(msg % (error, track, sector, offset, offset))
 
         # increment pet track/sector counters
         sector += 1

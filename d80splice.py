@@ -35,7 +35,8 @@ def splice(src_filename, dest_filename, splice_track, splice_sector):
         assert len(src_sector) == 256
 
         if (pet_track == splice_track) and (pet_sector == splice_sector):
-            print "spliced %d,%d into %s" % (splice_track, splice_sector, dest_filename)
+            sys.stdout.write("spliced %d,%d into %s\n" %
+                (splice_track, splice_sector, dest_filename))
             dest.write(src_sector)
         else:
             dest.seek(256, os.SEEK_CUR)

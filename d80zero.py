@@ -24,7 +24,8 @@ def zero(filename, target_track, target_sector):
 
     while True:
         if (pet_track == target_track) and (pet_sector == target_sector):
-            print "zeroed %d,%d of %s" % (target_track, target_sector, filename)
+            sys.stdout.write("zeroed %d,%d of %s\n" %
+                (target_track, target_sector, filename))
             f.write(chr(0) * 256)
         else:
             f.seek(256, os.SEEK_CUR)

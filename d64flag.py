@@ -35,7 +35,7 @@ def show_1571_ts_pointers(filename):
             if (sector_data == ''):
                 break # no data
 
-            t, s = map(ord, sector_data[0:2])
+            t, s = [ ord(x) for x in sector_data[0:2] ]
             if (t > 35) and (t < 71):
                 sys.stdout.write(
                     "  Track %d, Sector %d: Sector points to 1571 T%d/S%d\n" % (

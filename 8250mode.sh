@@ -11,7 +11,9 @@ fi
 
 if [ $# -lt 2 ] || [ $2 == 8250 ]; then
     echo "Setting unit $1 to double-sided (8250) mode"
-    echo "TODO - unimplemented"
+    cbmctrl -p command $1 m-w 172 16 1 2
+    cbmctrl -p command $1 m-w 195 16 1 38
+    cbmctrl -p command $1 u9
 else
     echo "Setting unit $1 to single-sided (8050) mode"
     cbmctrl -p command $1 m-w 172 16 1 1

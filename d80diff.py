@@ -14,7 +14,7 @@ def print_diff(a_filename, b_filename):
         '.d80': [533248, is_valid_8050_ts],
         '.d81': [819200, is_valid_1581_ts],
         '.d82': [1066496, is_valid_8250_ts]
-    }[ext]
+    }[ext.lower()]
 
     a = open(a_filename, "rb")
     b = open(b_filename, "rb")

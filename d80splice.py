@@ -17,7 +17,7 @@ def splice(src_filename, dest_filename, splice_track, splice_sector):
         '.d80': [533248, is_valid_8050_ts],
         '.d81': [819200, is_valid_1581_ts],
         '.d82': [1066496, is_valid_8250_ts]
-    }[src_ext]
+    }[src_ext.lower()]
 
     if not is_valid_ts(splice_track, splice_sector):
         msg = "Invalid track/sector: %d/%d" % (splice_track, splice_sector)

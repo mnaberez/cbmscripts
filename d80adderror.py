@@ -11,7 +11,7 @@ def add_errors(filename, target_track, target_sector, error_code):
         '.d81': [819200, is_valid_1581_ts],
         '.d80': [533248, is_valid_8050_ts],
         '.d82': [1066496, is_valid_8250_ts]
-    }[ext]
+    }[ext.lower()]
     sectors = size / 256
 
     if not is_valid_ts(target_track, target_sector):

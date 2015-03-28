@@ -12,7 +12,7 @@ def trunc(filename):
             '.d80': 533248,
             '.d81': 819200,
             '.d82': 1066496
-           }[ext]
+           }[ext.lower()]
 
     inp = open(filename, "rb")
     data = inp.read(size)

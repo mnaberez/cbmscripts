@@ -13,7 +13,7 @@ def print_dir(filename):
             '.d80': 533248,
             '.d81': 819200,
             '.d82': 1066496
-           }[ext]
+           }[ext.lower()]
 
     # if the image has error info at the end, c1541 can't read it,
     # so create a tempfile without the error info

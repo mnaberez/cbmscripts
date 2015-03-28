@@ -14,7 +14,7 @@ def print_bad(filename):
         '.d81': [819200, is_valid_1581_ts],
         '.d80': [533248, is_valid_8050_ts],
         '.d82': [1066496, is_valid_8250_ts]
-    }[ext]
+    }[ext.lower()]
 
     inp = open(filename, "rb")
     inp.seek(size)

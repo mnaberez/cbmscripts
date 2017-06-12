@@ -14,7 +14,8 @@ def show_double_sided_flag(filename):
 
             if (pet_track == 18) and (pet_sector == 0):
                 value = ord(sector_data[3])
-                sys.stdout.write("  Track 18, Sector 0 = 0x%02x " % value)
+                sys.stdout.write("  Track 18, Sector 0, Offset 3 = 0x%02x " %
+                                 value)
                 if (value & 0x80) > 0:
                     sys.stdout.write("(indicates double sided: 1571)\n")
                 else:

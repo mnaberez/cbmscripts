@@ -34,7 +34,9 @@ def print_dir(filename):
     # remove leading version/copyright info
     for i, line in enumerate(lines):
         if 'no warranty for C1541' in line:
-             break
+            break  # before VICE SVN commit r39593
+        if 'welcome to change' in line:
+            break  # after that commit
     lines = lines[i+1:]
 
     # remove prompts and empty lines
